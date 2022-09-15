@@ -1,40 +1,34 @@
 "use strict";
 
-(function (){
-  const listData = [1, 2, [1.1, 1.2, [2.4, 5.6], 1.3] , 3]
+(function () {
+  const listData = [1, 2, [1.1, 1.2, [2.4, 5.6], 1.3], 3]
 
-  const recursiveList = (data) => {
-    const ul = document.createElement('ul');
+  const generateList = (data, listType = 'ul') => {
 
-    for (let i = 0; i < data.length; i += 1){
+    const recursiveList = (listItems) => {
 
-      const li = document.createElement('li');
-      if (Array.isArray(data[i])){
-       li.append( recursiveList(data[i]) );
-      } else {
-        li.innerHTML = data[i];
+      const list = document.createElement(listType);
+
+      for (let i = 0; i < listItems.length; i += 1) {
+        const li = document.createElement('li');
+
+        Array.isArray(listItems[i]) ? li.append(recursiveList(listItems[i])) : li.innerHTML = listItems[i]
+
+
+        list.append(li);
+
       }
-
-      ul.append(li);
+      return list;
 
     }
-  return ul;
-
+    return recursiveList(data);
   }
 
-  const ul = recursiveList(listData);
+  const ul = generateList(listData, 'ul');
 
   document.body.append(ul);
 
 })()
-
-
-
-
-
-
-
-
 
 
 // (function (){
